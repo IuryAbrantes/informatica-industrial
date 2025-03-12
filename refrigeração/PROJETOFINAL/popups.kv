@@ -1,0 +1,193 @@
+#:kivy 2.3.1
+
+<ModbusPopup>:
+    title: "Configurações do MODBUS"
+    size_hint_y: None
+    size_hint_x: 0.4
+    height: 200
+    BoxLayout:
+        id: layout
+        orientation: 'vertical'
+        GridLayout:
+            cols: 2
+            rols: 2
+            Label:
+                text: "IP"
+                font_size: 14
+            TextInput:
+                id: txt_ip
+                text: "127.0.0.1"
+                font_size: 14
+                halign: 'center'
+                valign: 'middle'
+            Label:
+                text: "Porta"
+                font_size: 14
+            TextInput:
+                id: txt_porta
+                text: "502"
+                font_size: 14
+                halign: 'center'
+                valign: 'middle'
+        BoxLayout:
+            orientation: 'horizontal'
+            Button:
+                size_hint_y: None
+                height: 40
+                text: "Conectar"
+                on_release:
+                    root.clearInfo()
+                    app.root.startDataRead()
+            Button:
+                size_hint_y: None
+                height: 40
+                text: "Fechar"
+                on_release:
+                    root.dismiss()
+
+<ScanPopup>:
+    title: "Configuração ScanTime"
+    size_hint_y: None
+    size_hint_x: 0.4
+    height: 150
+    BoxLayout:
+        id: layout
+        orientation: 'vertical'
+        GridLayout:
+            cols: 2
+            rols: 1
+            Label:
+                text: "ScanTime [ms]"
+                font_size: 14
+            TextInput:
+                id: txt_st
+                font_size: 14
+                halign: 'center'
+                valign: 'middle'
+        BoxLayout:
+            orientation: 'horizontal'
+            Button:
+                size_hint_y: None
+                height: 40
+                text: "Configurar"
+                on_release: 
+                    app.root._scan_time = int(txt_st.text)
+            Button:
+                size_hint_y: None
+                height: 40
+                text: "Fechar"
+                on_release:
+                    root.dismiss()
+
+<MedidoresPopup>:
+    title: "Medidores da Planta"
+    BoxLayout:
+        orientation:'vertical'
+        GridLayout:
+            cols: 2
+            rows: 10
+            size_hint: (1,0.8)       
+            Label:
+                text: "Corrente R"
+                bold: True
+            Label:
+                id:corrente_r
+                text: '-.-A'
+            Label:
+                text: "Corrente S"
+                bold: True
+            Label:
+                id:corrente_s
+                text: '-.-A'
+            Label:
+                text: "Corrente T"
+                bold: True
+            Label:
+                id:corrente_t
+                text: '-.-A'
+            Label:
+                text: "Potência Ativa Total"
+                bold: True
+            Label:
+                id:pot_a_total
+                text: '-.-W'
+            Label:
+                text: "Frequência Motor"
+                bold: True
+            Label:
+                id:freq_motor
+                text: '-.-Hz'
+            Label:
+                text: "Temperatura Enrolamento R"
+                bold: True
+            Label:
+                id:temperatura_enrolamento_r
+                text: '-.-ºC'
+            Label:
+                text: "Temperatura Enrolamento S"
+                bold: True
+            Label:
+                id:temperatura_enrolamento_s
+                text: '-.-ºC'
+            Label:
+                text: "Temperatura Enrolamento T"
+                bold: True
+            Label:
+                id:temperatura_enrolamento_t
+                text: '-.-ºC'
+            Label:
+                text: "Fator Potência"
+                bold: True
+            Label:
+                id:fat_pot
+                text: '-.-'
+            Label:
+                text: "Fator Potência Comp"
+                bold: True
+            Label:
+                id:fat_pot_comp
+                text: '-.-'
+
+        Button:
+            size_hint_y: None
+            height: 40
+            text: "Fechar"
+            on_release:
+                root.dismiss()
+
+
+
+<GraficosPopup>:
+    Button:
+        size_hint_y: None
+        height: 40
+        text: "Fechar"
+        on_release:
+            root.dismiss()
+
+
+
+
+<MotoresPopup>:
+    Button:
+        size_hint_y: None
+        height: 40
+        text: "Fechar"
+        on_release:
+            root.dismiss()
+
+
+
+
+<DadosPopup>:
+    Button:
+        size_hint_y: None
+        height: 40
+        text: "Fechar"
+        on_release:
+            root.dismiss()
+
+
+
+
+
