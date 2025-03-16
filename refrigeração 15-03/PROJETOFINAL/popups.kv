@@ -1,0 +1,289 @@
+#:kivy 2.3.1
+
+<ModbusPopup>:
+    title: "Configurações do MODBUS"
+    size_hint_y: None
+    size_hint_x: 0.4
+    height: 200
+    BoxLayout:
+        id: layout
+        orientation: 'vertical'
+        GridLayout:
+            cols: 2
+            rows: 2
+            Label:
+                text: "IP"
+                font_size: 14
+            TextInput:
+                id: txt_ip
+                text: "127.0.0.1"
+                font_size: 14
+                halign: 'center'
+                valign: 'middle'
+            Label:
+                text: "Porta"
+                font_size: 14
+            TextInput:
+                id: txt_porta
+                text: "502"
+                font_size: 14
+                halign: 'center'
+                valign: 'middle'
+        BoxLayout:
+            orientation: 'horizontal'
+            Button:
+                size_hint_y: None
+                height: 40
+                text: "Conectar"
+                on_release:
+                    root.clearInfo()
+                    app.root.startDataRead()
+            Button:
+                size_hint_y: None
+                height: 40
+                text: "Fechar"
+                on_release:
+                    root.dismiss()
+
+<ScanPopup>:
+    title: "Configuração ScanTime"
+    size_hint_y: None
+    size_hint_x: 0.4
+    height: 150
+    BoxLayout:
+        id: layout
+        orientation: 'vertical'
+        GridLayout:
+            cols: 2
+            rows: 1
+            Label:
+                text: "ScanTime [ms]"
+                font_size: 14
+            TextInput:
+                id: txt_st
+                font_size: 14
+                halign: 'center'
+                valign: 'middle'
+        BoxLayout:
+            orientation: 'horizontal'
+            Button:
+                size_hint_y: None
+                height: 40
+                text: "Configurar"
+                on_release: 
+                    app.root._scan_time = int(txt_st.text)
+            Button:
+                size_hint_y: None
+                height: 40
+                text: "Fechar"
+                on_release:
+                    root.dismiss()
+
+<MedidoresPopup>:
+    title: "Medidores da Planta"
+    BoxLayout:
+        orientation:'vertical'
+        GridLayout:
+            cols: 2
+            rows: 12
+            size_hint: (1,0.8)       
+            Label:
+                text: "Corrente R"
+                bold: True
+            Label:
+                id:corrente_r
+                text: '-.-A'
+            Label:
+                text: "Corrente S"
+                bold: True
+            Label:
+                id:corrente_s
+                text: '-.-A'
+            Label:
+                text: "Corrente T"
+                bold: True
+            Label:
+                id:corrente_t
+                text: '-.-A'
+            Label:
+                text: "Potência Ativa Total"
+                bold: True
+            Label:
+                id:pot_a_total
+                text: '-.-W'
+            Label:
+                text: "Frequência Motor"
+                bold: True
+            Label:
+                id:frequencia_motor
+                text: '-.-Hz'
+            Label:
+                text: "Temperatura Enrolamento R"
+                bold: True
+            Label:
+                id:temperatura_enrolamento_r
+                text: '-.-ºC'
+            Label:
+                text: "Temperatura Enrolamento S"
+                bold: True
+            Label:
+                id:temperatura_enrolamento_s
+                text: '-.-ºC'
+            Label:
+                text: "Temperatura Enrolamento T"
+                bold: True
+            Label:
+                id:temperatura_enrolamento_t
+                text: '-.-ºC'
+            Label:
+                text: "Fator Potência"
+                bold: True
+            Label:
+                id:fat_pot
+                text: '-.-'
+            Label:
+                text: "Fator Potência Comp"
+                bold: True
+            Label:
+                id:fat_pot_comp
+                text: '-.-'
+            Label:
+                text: "Frequência do Motor"
+                bold: True
+            Label:
+                id:frequencia_motor
+                text: '-.-Hz'
+            Label:
+                text: "Frequência do Compressor"
+                bold: True
+            Label:
+                id:frequencia_compressor
+                text: '-.-Hz'
+
+        Button:
+            size_hint_y: None
+            height: 40
+            text: "Fechar"
+            on_release:
+                root.dismiss()       
+
+<LabelCheckBoxGraficosMotor>:
+    orientation:'horizontal'
+    size_hint: (0.1,1)
+    CheckBox:
+        id: checkbox
+        on_active: app.root._graficoMotorPopup.ids.graph.setMaxPoints(int(label.text),0 if app.root is not None else None)
+    Label:
+        id: label
+<MotoresPopup>:
+    BoxLayout:
+        orientation:'vertical'
+        BoxLayout:
+            orientation:'horizontal'
+            Button:
+                size_hint_y: None
+                height: 40
+                text: "Ativar Ventilador"
+                on_release:
+                    
+            Button:
+                size_hint_y: None
+                height: 40
+                text: "Fechar"
+                on_release:
+                    root.dismiss()
+
+
+
+<DadosPopup>:
+    Button:
+        size_hint_y: None
+        height: 40
+        text: "Fechar"
+        on_release:
+            root.dismiss()
+
+
+
+<LabelCheckBoxGraficosT1>:
+    orientation:'horizontal'
+    size_hint: (0.1,1)
+    CheckBox:
+        id: checkbox2
+        on_active: app.root._graficoTit01Popup.ids.graph2.setMaxPoints(int(label2.text),0 if app.root is not None else None)
+    Label:
+        id: label2
+
+<LabelCheckBoxGraficosAr>:
+    orientation:'horizontal'
+    size_hint: (0.1,1)
+    CheckBox:
+        id: checkbox3
+        on_active: app.root._graficoArSaiPopup.ids.graph3.setMaxPoints(int(label3.text),0 if app.root is not None else None)
+    Label:
+        id: Label3
+
+<LabelCheckBoxGraficosT2>:
+    orientation:'horizontal'
+    size_hint: (0.1,1)
+    CheckBox:
+        id: checkbox4
+        on_active: app.root._graficoTit02Popup.ids.graph4.setMaxPoints(int(label4.text),0 if app.root is not None else None)
+    Label:
+        id: label4
+
+
+<GraficoMotorPopup>:
+    title: 'Gráfico da Temperatura da Carcaça'
+    BoxLayout:
+        orientation:'vertical'
+        TimeSeriesGraph:
+            id: graph
+            xlabel: 'Horário'
+            ylabel: 'Temperatura [°C]'
+            label_options: {'color': [0, 0, 0, 1], 'bold': True}
+            background_color: 0.3,0.3,0.3
+            x_ticks_minor: 1
+            x_ticks_major: 5
+            y_ticks_major: 5
+            x_grid_label: True
+            y_grid_label: True
+            padding: 5
+            x_grid: True
+            y_grid: True
+            xmin: 0
+            ymin: 0
+            ymax: 120
+        BoxLayout:
+            orientation:'horizontal'
+            size_hint: (1,0.05)
+            BoxLayout:
+                orientation:'horizontal'
+                size_hint: (0.5,1)
+                Label:
+                    size_hint: (0.3,1)
+                    text: "Número de pontos do gráfico:"
+                LabelCheckBoxGraficosMotor:
+                    id:mp20
+                    on_kv_post:
+                        self.ids.label.text = '20'
+                        self.ids.checkbox.group = 'cb_group'
+                LabelCheckBoxGraficosMotor:
+                    id:mp50
+                    on_kv_post:
+                        self.ids.label.text = '50'
+                        self.ids.checkbox.group = 'cb_group'
+                LabelCheckBoxGraficosMotor:
+                    id:mp100
+                    on_kv_post:
+                        self.ids.label.text = '100'
+                        self.ids.checkbox.group = 'cb_group'                    
+            Button:
+                size_hint_y: None
+                height: 30
+                size_hint_x: None
+                width: 100
+                pos_hint: {'bottom':1, 'right':1}
+                text: "Fechar"
+                on_release:
+                    root.dismiss()
