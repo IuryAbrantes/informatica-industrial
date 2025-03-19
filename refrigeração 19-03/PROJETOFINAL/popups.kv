@@ -1,0 +1,1196 @@
+#:kivy 2.3.1
+
+<ModbusPopup>:
+    title: "Configurações do MODBUS"
+    size_hint_y: None
+    size_hint_x: 0.4
+    height: 200
+    BoxLayout:
+        id: layout
+        orientation: 'vertical'
+        GridLayout:
+            cols: 2
+            rows: 2
+            Label:
+                text: "IP"
+                font_size: 14
+            TextInput:
+                id: txt_ip
+                text: "127.0.0.1"
+                font_size: 14
+                halign: 'center'
+                valign: 'middle'
+            Label:
+                text: "Porta"
+                font_size: 14
+            TextInput:
+                id: txt_porta
+                text: "502"
+                font_size: 14
+                halign: 'center'
+                valign: 'middle'
+        BoxLayout:
+            orientation: 'horizontal'
+            Button:
+                size_hint_y: None
+                height: 40
+                text: "Conectar"
+                on_release:
+                    root.clearInfo()
+                    app.root.startDataRead()
+            Button:
+                size_hint_y: None
+                height: 40
+                text: "Fechar"
+                on_release:
+                    root.dismiss()
+
+<ScanPopup>:
+    title: "Configuração ScanTime"
+    size_hint_y: None
+    size_hint_x: 0.4
+    height: 150
+    BoxLayout:
+        id: layout
+        orientation: 'vertical'
+        GridLayout:
+            cols: 2
+            rows: 1
+            Label:
+                text: "ScanTime [ms]"
+                font_size: 14
+            TextInput:
+                id: txt_st
+                font_size: 14
+                halign: 'center'
+                valign: 'middle'
+        BoxLayout:
+            orientation: 'horizontal'
+            Button:
+                size_hint_y: None
+                height: 40
+                text: "Configurar"
+                on_release: 
+                    app.root._scan_time = int(txt_st.text)
+            Button:
+                size_hint_y: None
+                height: 40
+                text: "Fechar"
+                on_release:
+                    root.dismiss()
+
+<MedidoresMotorPopup>:
+    title: "Medidores do Motor"
+    BoxLayout:
+        orientation:'vertical'
+        GridLayout:
+            cols: 2
+            rows: 10
+            size_hint: (1,0.8)       
+            Label:
+                text: "Frequência Motor"
+                bold: True
+            Label:
+                id:frequencia_motor
+                text: '-.-Hz'
+            Label:
+                text: "Torque Motor Axial"
+                bold: True
+            Label:
+                id:torque_motor_axial
+                text: '-.-N.m'
+            Label:
+                text: "Corrente R"
+                bold: True
+            Label:
+                id:corrente_r
+                text: '-.-A'
+            Label:
+                text: "Corrente S"
+                bold: True
+            Label:
+                id:corrente_s
+                text: '-.-A'
+            Label:
+                text: "Corrente T"
+                bold: True
+            Label:
+                id:corrente_t
+                text: '-.-A'  
+            Label:
+                text: "Potência Ativa Total"
+                bold: True
+            Label:
+                id:pot_a_total
+                text: '-.-W'
+            Label:
+                text: "Temperatura Enrolamento R"
+                bold: True
+            Label:
+                id:temperatura_enrolamento_r
+                text: '-.-ºC'
+            Label:
+                text: "Temperatura Enrolamento S"
+                bold: True
+            Label:
+                id:temperatura_enrolamento_s
+                text: '-.-ºC'
+            Label:
+                text: "Temperatura Enrolamento T"
+                bold: True
+            Label:
+                id:temperatura_enrolamento_t
+                text: '-.-ºC'
+            Label:
+                text: "Fator Potência"
+                bold: True
+            Label:
+                id:fat_pot
+                text: '-.-'
+        Button:
+            size_hint_y: None
+            height: 40
+            text: "Fechar"
+            on_release:
+                root.dismiss()
+
+<MedidoresCompPopup>:
+    title: "Medidores do Compressor"
+    BoxLayout:
+        orientation:'vertical'
+        GridLayout:
+            cols: 2
+            rows: 6
+            size_hint: (1,0.8)       
+            Label:
+                text: "Frequência do Compressor"
+                bold: True
+            Label:
+                id:frequencia_compressor
+                text: '-.-Hz'
+            Label:
+                text: "Corrente R"
+                bold: True
+            Label:
+                id:corrente_r_comp
+                text: '-.-A'
+            Label:
+                text: "Corrente S"
+                bold: True
+            Label:
+                id:corrente_s_comp
+                text: '-.-A'
+            Label:
+                text: "Corrente T"
+                bold: True
+            Label:
+                id:corrente_t_comp
+                text: '-.-A'
+            Label:
+                text: "Potência Ativa Total"
+                bold: True
+            Label:
+                id: pot_a_total_comp
+                text: '-.-kW'
+            Label:
+                text: "Fator Potência Compressor"
+                bold: True
+            Label:
+                id:fat_pot_comp
+                text: '-.-'
+  
+        Button:
+            size_hint_y: None
+            height: 40
+            text: "Fechar"
+            on_release:
+                root.dismiss()
+
+<LabelCheckBoxGraficosMotor>:
+    orientation:'horizontal'
+    size_hint: (0.1,1)
+    CheckBox:
+        id: checkbox
+        on_active: app.root._graficoMotorPopup.ids.graph.setMaxPoints(int(label1.text),0 if app.root is not None else None)
+    Label:
+        id: label1
+
+<ComandoCompPopup>:
+    title: 'Comandos do compressor'
+    size_hint_y: None
+    size_hint_x: 0.7
+    height: 300
+    BoxLayout: 
+        orientation: 'vertical'
+        BoxLayout: 
+            orientation: 'horizontal'
+            BoxLayout: 
+                orientation: 'vertical'
+                Label: 
+                    text: 'Tipo de Compressor'
+                BoxLayout: 
+                    orientation: 'horizontal'
+                    ToggleButton: 
+                        id: scroll
+                        group: 'compressor'
+                        text: 'SCROLL'
+                        text_size: self.size
+                        state: 'down'
+                        halign: 'center'
+                        valign: 'middle'
+                        on_release: app.root.selecionaCompressor(0)
+                    ToggleButton: 
+                        id: herm
+                        group: 'compressor'
+                        text: 'HERMÉTICO'
+                        text_size: self.size
+                        halign: 'center'
+                        valign: 'middle'
+                        on_release: app.root.selecionaCompressor(1)
+            Widget:     # linha de divisão
+                width: 1
+                size_hint: None,1
+                canvas.before:
+                    Color:
+                        rgba: 0,0,0 
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+            BoxLayout: 
+                orientation: 'vertical'
+                Label: 
+                    text: 'Comando da Refrigeração'
+                BoxLayout: 
+                    orientation: 'horizontal'
+                    Button: 
+                        id: liga_comp
+                        text: 'LIGA'
+                        on_release: app.root.ligaCompressor(); app.root.velocidadeScroll()
+                    Button: 
+                        id: desliga_comp
+                        text: 'DESLIGA'
+                        on_release: app.root.desligaCompressor()
+        Widget:     # linha de divisão
+            height: 1
+            size_hint: 1,None
+            canvas.before:
+                Color:
+                    rgba: 0,0,0 
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+        BoxLayout: 
+            orientation: 'horizontal'
+            BoxLayout: 
+                orientation: 'vertical'
+                Label: 
+                    text: 'Controle do Scroll'
+                BoxLayout: 
+                    orientation: 'horizontal'
+                    ToggleButton: 
+                        group: scroll
+                        state: 'down'
+                        text: 'Manual'
+                        on_release:app.root.manualScroll()
+                    ToggleButton: 
+                        group: scroll
+                        text: 'Auto'
+                        on_release: app.root.automaticoScroll()
+            Widget:     # linha de divisão
+                width: 1
+                size_hint: None,1
+                canvas.before:
+                    Color:
+                        rgba: 0,0,0 
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+            BoxLayout: 
+                orientation: 'vertical'
+                Label: 
+                    id: value_label
+                    text: 'Velocidade Scroll: 0 Hz'
+                    size_hint_y: None
+                    height: '48dp'
+                Slider: 
+                    id: speed_slider
+                    min: 0
+                    max: 60
+                    step: 1
+                    value: 0
+                    size_hint_y: None
+                    height: '40dp'
+                    on_value: root.update_label()
+                FloatLayout:
+                    Label:
+                        text: '0 Hz'
+                        pos_hint:  {'center_x':0.09, 'center_y':0.9}
+                        size_hint_y: None
+                        height: '40dp'
+                        halign: 'left'
+                    Label:
+                        text: '60 Hz'
+                        pos_hint:  {'center_x':0.92, 'center_y':0.9}
+                        size_hint_y: None
+                        height: '40dp'
+                        halign: 'right'
+        Widget:     # linha de divisão
+            height: 1
+            size_hint: 1,None
+            canvas.before:
+                Color:
+                    rgba: 0,0,0 
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+        Button: 
+            text: "Fechar"
+            size_hint: 1,0.2
+            on_release: root.dismiss()
+
+<MotoresPopup>:
+    title: "Comandos do ventilador"
+    size_hint_y: None
+    size_hint_x: 0.9
+    height: 500
+    BoxLayout: 
+        orientation: 'vertical'
+        BoxLayout: 
+            orientation: 'horizontal'
+            size_hint: (1,0.7)
+            BoxLayout: 
+                orientation: 'vertical'
+                size_hint: (0.5,1)
+                Label: 
+                    text: "Comando do ventilador"
+                    size_hint: (1,0.4)
+                BoxLayout: 
+                    orientation: 'vertical'
+                    Button: 
+                        text: "LIGA"
+                        on_release: app.root.LigaMotor()
+                    Button: 
+                        text: "DESLIGA"
+                        on_release: app.root.LigaMotor()
+                    Button: 
+                        text: "RESET"
+                        on_release: app.root.resetVentilador()
+            Widget:     # linha de divisão
+                width: 1
+                size_hint: None,1
+                canvas:
+                    Color:
+                        rgb: 0.3,0.3,0.3 
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+            BoxLayout: 
+                orientation: 'vertical'
+                size_hint: (0.5,1)
+                Label: 
+                    text: "Tipo de partida"
+                    size_hint: (1,0.4)
+                BoxLayout: 
+                    orientation: 'vertical'
+                    ToggleButton: 
+                        text: "Tesys DIRETA"
+                        group: 'partida'
+                        text_size: self.size 
+                        halign: 'center'
+                        valign: 'middle'
+                        on_release: app.root.selecionaPartida(3)
+                        allow_no_selection: False
+                    ToggleButton: 
+                        text: "ATV31 INVERSOR"
+                        group: 'partida'
+                        text_size: self.size 
+                        halign: 'center'
+                        valign: 'middle'
+                        state: 'down'
+                        on_release: app.root.selecionaPartida(2)
+                    ToggleButton: 
+                        text: "ATS48 SOFT-START"
+                        group: 'partida'
+                        text_size: self.size 
+                        halign: 'center'
+                        valign: 'middle'
+                        on_release: app.root.selecionaPartida(1)
+            Widget:     # linha de divisão
+                width: 1
+                size_hint: None,1
+                canvas:
+                    Color:
+                        rgb: 0.3,0.3,0.3 
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+            GridLayout: 
+                cols:2
+                rows:5
+                cols_minimum: {0: 180, 1: 90}
+                Label_rampa: 
+                    text: "Velocidade do inversor (0Hz a 60 Hz)"
+                    text_size: self.size
+                TextInput: 
+                    id: vel_inversor
+                    font_size: 14
+                    halign: 'center'
+                    valign: 'middle'
+                Label_rampa: 
+                    text: "Rampa de aceleração do inversor (10s a 60s)"
+                    text_size: self.size
+                TextInput: 
+                    id: ac_inversor
+                    font_size: 14
+                    halign: 'center'
+                    valign: 'middle'
+                Label_rampa: 
+                    text: "Rampa de desaceleração do inversor (10s a 60s)"
+                    text_size: self.size
+                Slider: 
+                    id: speed_sliderinv
+                    min: 0
+                    max: 60       #Valor max = 60 Hz
+                    step: 1       #Passo de 1 Hz
+                    value: 0      #Valor inicial = 0 Hz
+                    on_touch_move:
+                        app.root.VelInversor(int((speed_sliderinv.value)))
+        Widget:     # linha de divisão
+            height: 1
+            size_hint: 1,None
+            canvas:
+                Color:
+                    rgb: 0.3,0.3,0.3
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+        BoxLayout: 
+            orientation: 'horizontal'
+            size_hint: (1,0.4)
+            BoxLayout: 
+                orientation: 'vertical'
+                Label: 
+                    text: "Seleção do ventilador"
+                BoxLayout: 
+                    orientation: 'horizontal'
+                    ToggleButton: 
+                        group: 'ventilador'
+                        text: "RADIAL"
+                        on_release: app.root.selecionaVentilador(0)
+                    ToggleButton: 
+                        group: 'ventilador'
+                        text: "AXIAL"
+                        state: 'down'
+                        on_release: app.root.selecionaVentilador(1)
+            Widget:     # linha de divisão
+                width: 1
+                size_hint: None,1
+                canvas:
+                    Color:
+                        rgb: 0.3,0.3,0.3
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+            BoxLayout: 
+                orientation: 'vertical'
+                Label: 
+                    text: "Seleção do motor"
+                BoxLayout: 
+                    orientation: 'horizontal'
+                    ToggleButton: 
+                        group: 'motor'
+                        text: "ALTO RENDIMENTO"
+                        text_size: self.size
+                        state: 'down'
+                        halign: 'center'
+                        valign: 'middle'
+                        on_release: app.root.selecionaMotor(0)
+                    ToggleButton: 
+                        group: 'motor'
+                        text: "CONVENCIONAL"
+                        text_size: self.size
+                        halign: 'center'
+                        valign: 'middle'
+                        on_release: app.root.selecionaMotor(1)
+            Button:
+                size_hint_y: None
+                height: 40
+                text: "Fechar"
+                on_release:
+                    root.dismiss()
+
+
+
+<DadosPopup>:
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint: (1,0.1)
+        Label:
+            text: 'Timestamp inicial \r\n (DD/MM/AAAA HH:MM:SS)'
+            halign: 'center'
+            markup: True
+        TextInput:
+            id: txt_init_time
+            size_hint: (1,0.8)
+            halign: 'center'
+            valing: 'middle'
+            multiline: False
+        Label:
+            text: 'Timestamp final \r\n (DD/MM/AAAA HH:MM:SS)'
+            halign: 'center'
+            markup: True
+        TextInput:
+            id: txt_final_time
+            size_hint: (1,0.8)
+            halign: 'center'
+            valing: 'middle'
+            multiline: False
+        Button:
+            size_hint_y: None
+            height: 40
+            text: "Fechar"
+            on_release:
+                root.dismiss()
+
+<LabelCheckBoxGraficosT1>:
+    orientation:'horizontal'
+    size_hint: (0.1,1)
+    CheckBox:
+        id: checkbox
+        on_active: app.root._graficoTit01Popup.ids.graph.setMaxPoints(int(label2.text),0 if app.root is not None else None)
+    Label:
+        id: label2
+
+<LabelCheckBoxGraficosAr>:
+    orientation:'horizontal'
+    size_hint: (0.1,1)
+    CheckBox:
+        id: checkbox
+        on_active: app.root._graficoArSaiPopup.ids.graph.setMaxPoints(int(label3.text),0 if app.root is not None else None)
+    Label:
+        id: label3
+
+<LabelCheckBoxGraficosT2>:
+    orientation:'horizontal'
+    size_hint: (0.1,1)
+    CheckBox:
+        id: checkbox
+        on_active: app.root._graficoTit02Popup.ids.graph.setMaxPoints(int(label4.text),0 if app.root is not None else None)
+    Label:
+        id: label4
+
+<LabelCheckBoxGraficosP1>:
+    orientation:'horizontal'
+    size_hint: (0.1,1)
+    CheckBox:
+        id: checkbox
+        on_active: app.root._graficoPit01Popup.ids.graph.setMaxPoints(int(label5.text),0 if app.root is not None else None)
+    Label:
+        id: label5
+
+<LabelCheckBoxGraficosP2>:
+    orientation:'horizontal'
+    size_hint: (0.1,1)
+    CheckBox:
+        id: checkbox
+        on_active: app.root._graficoPit02Popup.ids.graph.setMaxPoints(int(label6.text),0 if app.root is not None else None)
+    Label:
+        id: label6
+
+<LabelCheckBoxGraficosP3>:
+    orientation:'horizontal'
+    size_hint: (0.1,1)
+    CheckBox:
+        id: checkbox
+        on_active: app.root._graficoPit03Popup.ids.graph.setMaxPoints(int(label7.text),0 if app.root is not None else None)
+    Label:
+        id: label7
+
+<LabelCheckBoxGraficosVelAr>:
+    orientation:'horizontal'
+    size_hint: (0.1,1)
+    CheckBox:
+        id: checkbox
+        on_active: app.root._graficoVelArPopup.ids.graph.setMaxPoints(int(label8.text),0 if app.root is not None else None)
+    Label:
+        id: label8
+
+<LabelCheckBoxGraficosVelM>:
+    orientation:'horizontal'
+    size_hint: (0.1,1)
+    CheckBox:
+        id: checkbox
+        on_active: app.root._graficoVelMPopup.ids.graph.setMaxPoints(int(label9.text),0 if app.root is not None else None)
+    Label:
+        id: label9
+
+<GraficoMotorPopup>:
+    title: 'Gráfico da Temperatura da Carcaça do Motor'
+    BoxLayout:
+        orientation:'vertical'
+        TimeSeriesGraph:
+            id: graph
+            xlabel: 'Horário'
+            ylabel: 'Temperatura [°C]'
+            label_options: {'color': [0, 0, 0, 1], 'bold': True}
+            background_color: 0.3,0.3,0.3
+            x_ticks_minor: 1
+            x_ticks_major: 5
+            y_ticks_major: 5
+            x_grid_label: True
+            y_grid_label: True
+            padding: 5
+            x_grid: True
+            y_grid: True
+            xmin: 0
+            ymin: 0
+            ymax: 120
+        BoxLayout:
+            orientation:'horizontal'
+            size_hint: (1,0.05)
+            BoxLayout:
+                orientation:'horizontal'
+                size_hint: (0.5,1)
+                Label:
+                    size_hint: (0.3,1)
+                    text: "Número de pontos do gráfico:"
+                LabelCheckBoxGraficosMotor:
+                    id:mp20
+                    on_kv_post:
+                        self.ids.label1.text = '20'
+                        self.ids.checkbox.group = 'cb_group'
+                LabelCheckBoxGraficosMotor:
+                    id:mp50
+                    on_kv_post:
+                        self.ids.label1.text = '50'
+                        self.ids.checkbox.group = 'cb_group'
+                LabelCheckBoxGraficosMotor:
+                    id:mp100
+                    on_kv_post:
+                        self.ids.label1.text = '100'
+                        self.ids.checkbox.group = 'cb_group'                    
+            Button:
+                size_hint_y: None
+                height: 30
+                size_hint_x: None
+                width: 100
+                pos_hint: {'bottom':1, 'right':1}
+                text: "Fechar"
+                on_release:
+                    root.dismiss()
+
+<GraficoTit01Popup>:
+    title: 'Gráfico da Temperatura do Cano Azul'
+    BoxLayout:
+        orientation: 'vertical'
+        TimeSeriesGraph:
+            id: graph
+            xlabel: 'Horário'
+            ylabel: 'Temperatura [°C]'
+            label_options: {'color': [0, 0, 0, 1], 'bold': True}
+            background_color: 0.3, 0.3, 0.3
+            x_ticks_minor: 1
+            x_ticks_major: 5
+            y_ticks_major: 5
+            x_grid_label: True
+            y_grid_label: True
+            padding: 5
+            x_grid: True
+            y_grid: True
+            xmin: 0
+            ymin: 0
+            ymax: 50
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, 0.05)
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint: (0.5, 1)
+                Label:
+                    size_hint: (0.3, 1)
+                    text: "Número de pontos do gráfico:"
+                LabelCheckBoxGraficosT1:
+                    id: mp20
+                    on_kv_post:
+                        self.ids.label2.text = '20'
+                        self.ids.checkbox.group = 'cb_group2'
+                LabelCheckBoxGraficosT1:
+                    id: mp50
+                    on_kv_post:
+                        self.ids.label2.text = '50'
+                        self.ids.checkbox.group = 'cb_group2'
+                LabelCheckBoxGraficosT1:
+                    id: mp100
+                    on_kv_post:
+                        self.ids.label2.text = '100'
+                        self.ids.checkbox.group = 'cb_group2'
+            Button:
+                size_hint_y: None
+                height: 30
+                size_hint_x: None
+                width: 100
+                pos_hint: {'bottom': 1, 'right': 1}
+                text: "Fechar"
+                on_release:
+                    root.dismiss()
+
+<GraficoArSaiPopup>:
+    title: 'Gráfico da Temperatura do Ar de Saída'
+    BoxLayout:
+        orientation: 'vertical'
+        TimeSeriesGraph:
+            id: graph
+            xlabel: 'Horário'
+            ylabel: 'Temperatura [°C]'
+            label_options: {'color': [0, 0, 0, 1], 'bold': True}
+            background_color: 0.3, 0.3, 0.3
+            x_ticks_minor: 1
+            x_ticks_major: 5
+            y_ticks_major: 5
+            x_grid_label: True
+            y_grid_label: True
+            padding: 5
+            x_grid: True
+            y_grid: True
+            xmin: 0
+            ymin: 0
+            ymax: 50
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, 0.05)
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint: (0.5, 1)
+                Label:
+                    size_hint: (0.3, 1)
+                    text: "Número de pontos do gráfico:"
+                LabelCheckBoxGraficosAr:
+                    id: mp20
+                    on_kv_post:
+                        self.ids.label3.text = '20'
+                        self.ids.checkbox.group = 'cb_group3'
+                LabelCheckBoxGraficosAr:
+                    id: mp50
+                    on_kv_post:
+                        self.ids.label3.text = '50'
+                        self.ids.checkbox.group = 'cb_group3'
+                LabelCheckBoxGraficosAr:
+                    id: mp100
+                    on_kv_post:
+                        self.ids.label3.text = '100'
+                        self.ids.checkbox.group = 'cb_group3'
+            Button:
+                size_hint_y: None
+                height: 30
+                size_hint_x: None
+                width: 100
+                pos_hint: {'bottom': 1, 'right': 1}
+                text: "Fechar"
+                on_release:
+                    root.dismiss()
+
+<GraficoTit02Popup>:
+    title: 'Gráfico da Temperatura do Cano Vermelho'
+    BoxLayout:
+        orientation: 'vertical'
+        TimeSeriesGraph:
+            id: graph
+            xlabel: 'Horário'
+            ylabel: 'Temperatura [°C]'
+            label_options: {'color': [0, 0, 0, 1], 'bold': True}
+            background_color: 0.3, 0.3, 0.3
+            x_ticks_minor: 1
+            x_ticks_major: 5
+            y_ticks_major: 5
+            x_grid_label: True
+            y_grid_label: True
+            padding: 5
+            x_grid: True
+            y_grid: True
+            xmin: 0
+            ymin: 0
+            ymax: 50
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, 0.05)
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint: (0.5, 1)
+                Label:
+                    size_hint: (0.3, 1)
+                    text: "Número de pontos do gráfico:"
+                LabelCheckBoxGraficosT2:
+                    id: mp20
+                    on_kv_post:
+                        self.ids.label4.text = '20'
+                        self.ids.checkbox.group = 'cb_group4'
+                LabelCheckBoxGraficosT2:
+                    id: mp50
+                    on_kv_post:
+                        self.ids.label4.text = '50'
+                        self.ids.checkbox.group = 'cb_group4'
+                LabelCheckBoxGraficosT2:
+                    id: mp100
+                    on_kv_post:
+                        self.ids.label4.text = '100'
+                        self.ids.checkbox.group = 'cb_group4'
+            Button:
+                size_hint_y: None
+                height: 30
+                size_hint_x: None
+                width: 100
+                pos_hint: {'bottom': 1, 'right': 1}
+                text: "Fechar"
+                on_release:
+                    root.dismiss()
+
+<GraficoPit02Popup>:
+    title: 'Gráfico da Pressão no Cano Vermelho'
+    BoxLayout:
+        orientation: 'vertical'
+        TimeSeriesGraph:
+            id: graph
+            xlabel: 'Horário'
+            ylabel: 'Temperatura [°C]'
+            label_options: {'color': [0, 0, 0, 1], 'bold': True}
+            background_color: 0.3, 0.3, 0.3
+            x_ticks_minor: 1
+            x_ticks_major: 5
+            y_ticks_major: 2
+            x_grid_label: True
+            y_grid_label: True
+            padding: 5
+            x_grid: True
+            y_grid: True
+            xmin: 0
+            ymin: 0
+            ymax: 20
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, 0.05)
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint: (0.5, 1)
+                Label:
+                    size_hint: (0.3, 1)
+                    text: "Número de pontos do gráfico:"
+                LabelCheckBoxGraficosP2:
+                    id: mp20
+                    on_kv_post:
+                        self.ids.label6.text = '20'
+                        self.ids.checkbox.group = 'cb_group2'
+                LabelCheckBoxGraficosP2:
+                    id: mp50
+                    on_kv_post:
+                        self.ids.label6.text = '50'
+                        self.ids.checkbox.group = 'cb_group2'
+                LabelCheckBoxGraficosP2:
+                    id: mp100
+                    on_kv_post:
+                        self.ids.label6.text = '100'
+                        self.ids.checkbox.group = 'cb_group2'
+            Button:
+                size_hint_y: None
+                height: 30
+                size_hint_x: None
+                width: 100
+                pos_hint: {'bottom': 1, 'right': 1}
+                text: "Fechar"
+                on_release:
+                    root.dismiss()
+
+<GraficoPit01Popup>:
+    title: 'Gráfico da Pressão no Cano Azul'
+    BoxLayout:
+        orientation: 'vertical'
+        TimeSeriesGraph:
+            id: graph
+            xlabel: 'Horário'
+            ylabel: 'Temperatura [°C]'
+            label_options: {'color': [0, 0, 0, 1], 'bold': True}
+            background_color: 0.3, 0.3, 0.3
+            x_ticks_minor: 1
+            x_ticks_major: 5
+            y_ticks_major: 2
+            x_grid_label: True
+            y_grid_label: True
+            padding: 5
+            x_grid: True
+            y_grid: True
+            xmin: 0
+            ymin: 0
+            ymax: 50
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, 0.05)
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint: (0.5, 1)
+                Label:
+                    size_hint: (0.3, 1)
+                    text: "Número de pontos do gráfico:"
+                LabelCheckBoxGraficosP1:
+                    id: mp20
+                    on_kv_post:
+                        self.ids.label5.text = '20'
+                        self.ids.checkbox.group = 'cb_group3'
+                LabelCheckBoxGraficosP1:
+                    id: mp50
+                    on_kv_post:
+                        self.ids.label5.text = '50'
+                        self.ids.checkbox.group = 'cb_group3'
+                LabelCheckBoxGraficosP1:
+                    id: mp100
+                    on_kv_post:
+                        self.ids.label5.text = '100'
+                        self.ids.checkbox.group = 'cb_group3'
+            Button:
+                size_hint_y: None
+                height: 30
+                size_hint_x: None
+                width: 100
+                pos_hint: {'bottom': 1, 'right': 1}
+                text: "Fechar"
+                on_release:
+                    root.dismiss()
+
+<GraficoPit03Popup>:
+    title: 'Gráfico da Pressão na câmara de entrada de ar do ventilador'
+    BoxLayout:
+        orientation: 'vertical'
+        TimeSeriesGraph:
+            id: graph
+            xlabel: 'Horário'
+            ylabel: 'Temperatura [°C]'
+            label_options: {'color': [0, 0, 0, 1], 'bold': True}
+            background_color: 0.3, 0.3, 0.3
+            x_ticks_minor: 1
+            x_ticks_major: 5
+            y_ticks_major: 2
+            x_grid_label: True
+            y_grid_label: True
+            padding: 5
+            x_grid: True
+            y_grid: True
+            xmin: 0
+            ymin: 0
+            ymax: 20
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, 0.05)
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint: (0.5, 1)
+                Label:
+                    size_hint: (0.3, 1)
+                    text: "Número de pontos do gráfico:"
+                LabelCheckBoxGraficosP3:
+                    id: mp20
+                    on_kv_post:
+                        self.ids.label7.text = '20'
+                        self.ids.checkbox.group = 'cb_group4'
+                LabelCheckBoxGraficosP3:
+                    id: mp50
+                    on_kv_post:
+                        self.ids.label7.text = '50'
+                        self.ids.checkbox.group = 'cb_group4'
+                LabelCheckBoxGraficosP3:
+                    id: mp100
+                    on_kv_post:
+                        self.ids.label7.text = '100'
+                        self.ids.checkbox.group = 'cb_group4'
+            Button:
+                size_hint_y: None
+                height: 30
+                size_hint_x: None
+                width: 100
+                pos_hint: {'bottom': 1, 'right': 1}
+                text: "Fechar"
+                on_release:
+                    root.dismiss()
+
+<GraficoVelArPopup>:
+    title: 'Gráfico da Velocidade do Ar na Saída'
+    BoxLayout:
+        orientation:'vertical'
+        TimeSeriesGraph:
+            id: graph
+            xlabel: 'Horário'
+            ylabel: 'Velocidade [m/s]'
+            label_options: {'color': [0, 0, 0, 1], 'bold': True}
+            background_color: 0.3,0.3,0.3
+            x_ticks_minor: 1
+            x_ticks_major: 5
+            y_ticks_major: 2
+            x_grid_label: True
+            y_grid_label: True
+            padding: 5
+            x_grid: True
+            y_grid: True
+            xmin: 0
+            ymin: 0
+            ymax: 15
+        BoxLayout:
+            orientation:'horizontal'
+            size_hint: (1,0.05)
+            BoxLayout:
+                orientation:'horizontal'
+                size_hint: (0.5,1)
+                Label:
+                    size_hint: (0.3,1)
+                    text: "Número de pontos do gráfico:"
+                LabelCheckBoxGraficosVelAr:
+                    id:mp20
+                    on_kv_post:
+                        self.ids.label8.text = '20'
+                        self.ids.checkbox.group = 'cb_group'
+                LabelCheckBoxGraficosVelAr:
+                    id:mp50
+                    on_kv_post:
+                        self.ids.label8.text = '50'
+                        self.ids.checkbox.group = 'cb_group'
+                LabelCheckBoxGraficosVelAr:
+                    id:mp100
+                    on_kv_post:
+                        self.ids.label8.text = '100'
+                        self.ids.checkbox.group = 'cb_group'                    
+            Button:
+                size_hint_y: None
+                height: 30
+                size_hint_x: None
+                width: 100
+                pos_hint: {'bottom':1, 'right':1}
+                text: "Fechar"
+                on_release:
+                    root.dismiss()
+
+<GraficoVelMPopup>:
+    title: 'Gráfico da Velocidade do Ventilador'
+    BoxLayout:
+        orientation:'vertical'
+        TimeSeriesGraph:
+            id: graph
+            xlabel: 'Horário'
+            ylabel: 'Velocidade [RPM]'
+            label_options: {'color': [0, 0, 0, 1], 'bold': True}
+            background_color: 0.3,0.3,0.3
+            x_ticks_minor: 1
+            x_ticks_major: 5
+            y_ticks_major: 100
+            x_grid_label: True
+            y_grid_label: True
+            padding: 5
+            x_grid: True
+            y_grid: True
+            xmin: 0
+            ymin: 0
+            ymax: 3800
+        BoxLayout:
+            orientation:'horizontal'
+            size_hint: (1,0.05)
+            BoxLayout:
+                orientation:'horizontal'
+                size_hint: (0.5,1)
+                Label:
+                    size_hint: (0.3,1)
+                    text: "Número de pontos do gráfico:"
+                LabelCheckBoxGraficosVelM:
+                    id:mp20
+                    on_kv_post:
+                        self.ids.label9.text = '20'
+                        self.ids.checkbox.group = 'cb_group'
+                LabelCheckBoxGraficosVelM:
+                    id:mp50
+                    on_kv_post:
+                        self.ids.label9.text = '50'
+                        self.ids.checkbox.group = 'cb_group'
+                LabelCheckBoxGraficosVelM:
+                    id:mp100
+                    on_kv_post:
+                        self.ids.label9.text = '100'
+                        self.ids.checkbox.group = 'cb_group'                    
+            Button:
+                size_hint_y: None
+                height: 30
+                size_hint_x: None
+                width: 100
+                pos_hint: {'bottom':1, 'right':1}
+                text: "Fechar"
+                on_release:
+                    root.dismiss()
+
+<HistGraphPopup>:
+    title: "Histórico de dados"
+    BoxLayout:
+        orientation:'vertical'
+        TimeSeriesGraph:
+            id: graph
+            xlabel: 'Horário'
+            ylabel: 'Temperatura [°C]'
+            label_options: {'color': [0, 0, 0, 1], 'bold': True}
+            background_color: 0.3, 0.3, 0.3
+            x_ticks_minor: 1
+            x_ticks_major: 5
+            y_ticks_major: 5
+            x_grid_label: True
+            y_grid_label: True
+            padding: 5
+            x_grid: True
+            y_grid: True
+            xmin: 0
+            ymin: 0
+            ymax: 70
+        BoxLayout:
+            id: sensores
+            orientation: 'horizontal'
+            size_hint: (1,0.1)
+        BoxLayout:
+            orientation:'horizontal'
+            size_hint: (1,0.1)
+            Label:
+                text:'Timestamp inicial \r\n [size=12] (DD/MM/AAAA HH:MM:SS)'
+                haling: 'center'
+                markup: True
+            TextInput:
+                id: txt_init_time
+                size_hint: (1,0.8)
+                haling: 'center'
+                valing: 'middle'
+                multiline: False
+            Label:
+                text:'Timestamp final \r\n [size=12] (DD/MM/AAAA HH:MM:SS)'
+                haling: 'center'
+                markup: True
+            TextInput:
+                id: txt_final_time
+                size_hint: (1,0.8)
+                haling: 'center'
+                valing: 'middle'
+                multiline: False
+            Button:
+                text:"Fechar"
+                size_hint: (1,0.8)
+                on_release: root.dismiss()
+
+<LabeledCheckBoxHistGraph>:
+    orientation:'horizontal'
+    size_hint: (0.05,1)
+    CheckBox:
+        id:checkbox
+        on_active: app.root.BuscaComKivy()
+    Label:
+        id: label
+        font_size: 12
+        bold: True
+    
+<Label_rampa@Label>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1  
+        Line:
+            rectangle: (self.x, self.y, self.width, self.height)
+            width: 1
+    color: 1,1,1,1
+    halign: 'center'
+    valign: 'middle'
+    text_size: self.size   
